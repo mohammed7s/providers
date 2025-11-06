@@ -1,0 +1,128 @@
+{
+  "actionType": "transfer_revolut_business",
+  "authLink": "",
+  "url": "https://b2b.revolut.com/api/1.0/transactions?count=100",
+  "method": "GET",
+  "body": "",
+  "metadata": {
+    "platform": "revolut-business",
+    "urlRegex": "https://b2b\\.revolut\\.com/api/1\\.0/transactions(\\?.*)?$",
+    "method": "GET",
+    "fallbackUrlRegex": "",
+    "fallbackMethod": "",
+    "preprocessRegex": "",
+    "shouldSkipCloseTab": true,
+    "transactionsExtraction": {
+      "transactionJsonPathListSelector": "$",
+      "transactionJsonPathSelectors": {
+        "recipient": "$.counterpart.account.name",
+        "amount": "$.amount",
+        "date": "$.created_at",
+        "paymentId": "$.id",
+        "currency": "$.currency",
+        "type": "$.type",
+        "state": "$.state"
+      }
+    },
+    "proofMetadataSelectors": [
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].id"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].amount"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].currency"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].counterpart.account.name"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].created_at"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].state"
+      },
+      {
+        "type": "jsonPath",
+        "value": "$.[{{INDEX}}].type"
+      }
+    ]
+  },
+  "paramNames": [],
+  "paramSelectors": [],
+  "skipRequestHeaders": [
+    "User-Agent",
+    "Accept-Encoding"
+  ],
+  "secretHeaders": [
+    "Authorization"
+  ],
+  "responseMatches": [
+    {
+      "type": "regex",
+      "value": "\"id\":\"(?<id>[^\"]+)\""
+    },
+    {
+      "type": "regex",
+      "value": "\"amount\":(?<amount>-?[0-9]+(?:\\.[0-9]+)?)"
+    },
+    {
+      "type": "regex",
+      "value": "\"currency\":\"(?<currency>[^\"]+)\""
+    },
+    {
+      "type": "regex",
+      "value": "\"created_at\":\"(?<created_at>[^\"]+)\""
+    },
+    {
+      "type": "regex",
+      "value": "\"state\":\"(?<state>[^\"]+)\""
+    },
+    {
+      "type": "regex",
+      "value": "\"type\":\"(?<type>[^\"]+)\""
+    },
+    {
+      "type": "regex",
+      "value": "\"name\":\"(?<counterpart_name>[^\"]+)\"",
+      "hash": true
+    }
+  ],
+  "responseRedactions": [
+    {
+      "jsonPath": "$.[{{INDEX}}].id",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].amount",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].currency",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].created_at",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].state",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].type",
+      "xPath": ""
+    },
+    {
+      "jsonPath": "$.[{{INDEX}}].counterpart.account.name",
+      "xPath": ""
+    }
+  ]
+}
